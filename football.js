@@ -12,12 +12,16 @@ function gamble(tests, stdDev, spread, bettingLine) {
   } else if ( bettingLine < 0 ) {
     //console.log('negative betting line')
     var winBet = 100;
-    var loseBet = bettingLine * -1;
+    var loseBet = bettingLine*-1;
   } else {
     //console.log('even betting line')
     var winBet = 100;
     var loseBet = 100;
   }
+  winBet = Number(winBet);
+  loseBet = Number(loseBet);
+  currentMoney = Number(currentMoney);
+  bettingLine = Number(bettingLine);
   for ( i=0; i<tests; i++ ){
     let x = random(0-spread, stdDev);
     if ( x < 0 ) {
@@ -29,6 +33,7 @@ function gamble(tests, stdDev, spread, bettingLine) {
     } else {
       //console.log("tie " + x);
     }
+    //console.log(currentMoney);
   }
   let expectedReturn = currentMoney/tests;
   return (expectedReturn / loseBet); //Prints your expected return on your bet.  In other words, if you bet 1$ "tests" number of times, how much money would you make or lose per test, on average?
