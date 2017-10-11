@@ -3,7 +3,7 @@ function random(m, s) {
   return Math.round(m + 2.0 * s * (Math.random() + Math.random() + Math.random() - 1.5));
 }
 
-function gamble(tests, stdDev, spread, bettingLine, expectedScore) {
+function gamble(tests, stdDev, spread, bettingLine) {
   let currentMoney = 0;
   if ( bettingLine > 0 ) {
     //console.log('positive betting line')
@@ -19,13 +19,15 @@ function gamble(tests, stdDev, spread, bettingLine, expectedScore) {
     var loseBet = 100;
   }
   for ( i=0; i<tests; i++ ){
-    let x = random(expectedScore, stdDev);
-    if ( x < spread ) {
+    let x = random(0-spread, stdDev);
+    if ( x < 0 ) {
       //console.log("win " + x);
       currentMoney += winBet;
-    } else if ( x > spread ) {
+    } else if ( x > 0 ) {
       //console.log("lose " + x);
       currentMoney -= loseBet;
+    } else {
+      //console.log("tie " + x);
     }
   }
   let expectedReturn = currentMoney/tests;
@@ -41,22 +43,21 @@ function gamble(tests, stdDev, spread, bettingLine, expectedScore) {
 
 // You probably don't need to alter anything after this.*/
 
-let tests = 5000000; //How many simulations you want to run.
-let stdDev = 11.7; //based on 538's models, 68% chance the game stays within this point total, which I'm guessing means it's a single standard deviation away.
+//let tests = 5000000; //How many simulations you want to run.
+//let stdDev = 11.7; //based on 538's models, 68% chance the game stays within this point total, which I'm guessing means it's a single standard deviation away.
 
 document.getElementById('myButton').onclick = function() {
   //let x = gamble(tests, stdDev, inputSpread.value, inputBettingLine.value, inputExpectedScore.value);
   //let x = gamble(tests, stdDev, spread, bettingLine, expectedScore);
   document.getElementById('output').innerHTML = "";
-  let convertedExScore = parseInt(inputExpectedScore.value)
-  let x = 100 * gamble(inputTests.value, inputStdDev.value, inputSpread.value, inputBettingLine.value, convertedExScore);
+  let x = 100 * gamble(inputTests.value, inputStdDev.value, inputSpread.value, inputBettingLine.value);
   x = x.toFixed(0);
   if ( x > 0 ) {
-    document.getElementById('output').innerHTML += '<div class="alert alert-success" role="alert">Based on ' + tests + ' simulations, you are expected to gain ' + x + ' cents for every dollar you bet.</div>'
+    document.getElementById('output').innerHTML += '<div class="alert alert-success" role="alert">Based on ' + inputTests.value + ' simulations, you are expected to gain ' + x + ' cents for every dollar you bet.</div>'
   } else if ( x < 0 ) {
-    document.getElementById('output').innerHTML += '<div class="alert alert-danger" role="alert">Based on ' + tests + ' simulations, you are expected to lose ' + x*-1 + ' cents for every dollar you bet.</div>'
+    document.getElementById('output').innerHTML += '<div class="alert alert-danger" role="alert">Based on ' + inputTests.value + ' simulations, you are expected to lose ' + x*-1 + ' cents for every dollar you bet.</div>'
   } else {
-    document.getElementById('output').innerHTML += '<div class="alert alert-secondary" role="alert">Based on ' + tests + ' simulations, this is a completely even bet.'
+    document.getElementById('output').innerHTML += '<div class="alert alert-secondary" role="alert">Based on ' + inputTests.value + ' simulations, this is a completely even bet.'
   }
   document.getElementById('output').innerHTML += "</div>"
   return false;

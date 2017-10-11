@@ -12,24 +12,23 @@
     <div class="container">
       <form id="myForm">
         <div class="form-group">
-          <label for="inputSpread">Spread</label>
-          <input type="input" class="form-control" id="inputSpread" placeholder="E.g. 0.5, 1">
+          <label for="inputSpread">Spread minus Expected Score</label>
+          <input type="input" class="form-control" id="inputSpread" aria-describedby="spreadHelp" placeholder="E.g. 0.5, 1">
+          <small id="spreadHelp" class="form-text text-muted">If your team is expected to lose by 5.5 points but you expect them lose by 3 points, that would be comparing +5.5 to +3. Subtracting your expected score of 3 from that spread of 5.5 gives you 2.5, which is what you would input here.</small>
         </div>
         <div class="form-group">
           <label for="inputBettingLine">Betting Line</label>
           <input type="input" class="form-control" id="inputBettingLine" placeholder="Set to 0 for an even betting line">
         </div>
         <div class="form-group">
-          <label for="inputExpectedScore">Expected Score</label>
-          <input type="input" class="form-control" id="inputExpectedScore" placeholder="Expected Score">
+          <label for="inputTests">Number of Simulations to run</label>
+          <input type="input" class="form-control" aria-describedby="testsHelp" id="inputTests" value=2000000>
+          <small id="testsHelp" class="form-text text-muted">No need to put this too high, it can cause crashes.  2,000,000 is plenty.</small>
         </div>
         <div class="form-group">
-          <label for="inputTests">Number of Simulations to run (going too high can cause crashes! 5,000,000 is plenty)</label>
-          <input type="input" class="form-control" id="inputTests" value=5000000>
-        </div>
-        <div class="form-group">
-          <label for="inputStdDev">Standard Deviation (DON'T TOUCH)</label>
-          <input type="input" class="form-control" id="inputStdDev" value=11.7>
+          <label for="inputStdDev">Standard Deviation (DON'T TOUCH<sup> probably</sup>)</label>
+          <input type="input" class="form-control" id="inputStdDev" value=11.7 aria-describedby="testsHelp">
+          <small id="testsHelp" class="form-text text-muted">Just don't touch this unless you're sure you know what you're doing.</small>
         </div>
         <button type="submit" class="btn btn-primary" id="myButton">Submit</button>
         <div id="output"></div>
